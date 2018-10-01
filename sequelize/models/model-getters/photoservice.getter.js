@@ -2,6 +2,7 @@ class Getter {
     get signUpGetter() {
         return function () {
             return {
+                uid: this.getDataValue('uid'),
                 isVerified: this.getDataValue('isVerified')
             }
         }

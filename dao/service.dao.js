@@ -34,7 +34,33 @@ class Service {
             }).catch(error => reject(error));
         })
     };
+
+    static delete(uid) {
+        return new Promise((resolve, reject) => {
+            servicePhotoService.findAll({
+                where: {
+                    serviceId: uid
+                }
+            })
+                .then((accessResult) => {
+                    if (accessResult.length) {
+                        return reject({ name: "references table is already in use" });
+                    } else {
+                        service.destroy({ where: { uid } })
+                            .then(result => resolve(result))
+                            .catch(error => reject(error))
+                    }
+                })
+                .catch((accessError) => reject(accessError))
+        })
+    }
 }
+// Service.delete('c721c8bd-0cca-4e99-ba0a-41794e3c6805').then((result) => {
+//     console.log('+++++++++++ ', result);
+    
+// }).catch(err => {
+//     console.log(err);
+// })
 
 
 module.exports = Service;

@@ -4,7 +4,7 @@ class Service {
     static create(req, res) {
         dao.create(req.body)
             .then((data) => res.status(200).json(data))
-            .catch((error) => res.status(400).json(error.name))
+            .catch((error) => res.status(400).send(error.name))
     };
 
     static update(req, res) {
@@ -15,8 +15,19 @@ class Service {
                 }
                 return res.status(200).send("updated");
             })
-            .catch((error) => res.status(400).json(error))
+            .catch((error) => res.status(400).send(error.name))
     };
+
+    static delete(req, res) {
+        dao.delete(req.params.uid)
+            .then((result) => {
+                if(!result){
+                    return res.status(400).send("Id is wrong")
+                }
+                return res.status(200).send("deleted")
+            })
+            .catch(error => res.status(400).send(error.name));
+    }
 }
 
 module.exports = Service;

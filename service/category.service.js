@@ -17,6 +17,15 @@ class Category {
             })
             .catch((error) => res.status(400).json(error))
     };
+
+    static delete(req, res) {
+        dao.delete(req.params.uid).then((result) => {
+            if (result) {
+                return res.status(200).send("deleted");
+            }
+            return res.status(400).send("id is wrong" );
+        }).catch(err => res.status(400).send(err.name));
+    }
 }
 
 module.exports = Category;

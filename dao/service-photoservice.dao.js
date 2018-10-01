@@ -12,8 +12,6 @@ class ServicePhotoService {
                 prize: data.prize
             })
             .then(result => {
-                console.log(result);
-                
                 resolve(result)
             })
             .catch(error => reject(error));

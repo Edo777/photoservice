@@ -6,7 +6,7 @@ class Validate {
     static signUp(req, res, next) {
         Joi.validate(req.body, Schema.signUp, (err, result) => {
             if (err) {
-                err = err.details ? { message: err.details[0].message } : { message: err.message };
+                err = err.details ? err.details[0].message : err.message;
                 return res.status(400).json(err);
             }
             next();
@@ -27,7 +27,7 @@ class Validate {
         Joi.validate(req.params, Schema.getOneFromAdmin, (err, result) => {
             if (err) {
                 err = err.details ? err.details[0].message : err.message;
-                return res.status(400).json(err);
+                return res.status(400).send(err);
             }
             next();
         });
@@ -51,7 +51,7 @@ class Validate {
         Joi.validate(req.body, Schema.update, (err, result) => {
             if (err) {
                 err = err.details ? err.details[0].message : err.message;
-                return res.status(400).json(err);
+                return res.status(400).send(err);
             }
             next();
         });

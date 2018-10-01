@@ -8,7 +8,7 @@ class Schema {
             type: Joi.string().guid().required(),
             data: Joi.object().required()
         });
-    }
+    };
 
     static get update() {
         return {
@@ -23,7 +23,14 @@ class Schema {
                     uid: Joi.string().guid().required()
                 })
         };
-    }
+    };
+
+    static get delete() {
+        return Joi.object().keys({
+            uid: Joi.string().guid().required()
+        });
+    };
+
 }
 
 module.exports = Schema;

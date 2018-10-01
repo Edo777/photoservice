@@ -25,6 +25,12 @@ class Schema {
                 })
         };
     };
+
+    static get delete() {
+        return Joi.object().keys({
+            uid: Joi.string().guid().required()
+        });
+    };
 }
 
 module.exports = Schema;
