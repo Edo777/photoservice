@@ -55,10 +55,64 @@ class Validate {
             }
             next();
         });
-    }
+    };
 
-    static isVerified(req, res, next) {
+    static createVerifyNumber(req, res, next) {
+        Joi.validate(req.params, Schema.createVerifyNumber['params'], (err, result) => {
+            if (err) {
+                err = err.details ? err.details[0].message : err.message;
+                return res.status(400).send(err);
+            }
+            Joi.validate(req.body, Schema.createVerifyNumber['body'], (err, result) => {
+                if (err) {
+                    err = err.details ? err.details[0].message : err.message;
+                    return res.status(400).send(err);
+                }
+                next();
+            });
+        });
+    };
 
+    static verify(req, res, next) {
+        Joi.validate(res.locals, Schema.verify['locals'], (err, result) => {
+            if (err) {
+                err = err.details ? err.details[0].message : err.message;
+                return res.status(400).send("Please login and try it again");
+            }
+            Joi.validate(req.body, Schema.verify['body'], (err, result) => {
+                if (err) {
+                    err = err.details ? err.details[0].message : err.message;
+                    return res.status(400).send(err);
+                }
+                next();
+            });
+        });
+    };
+
+    static delete(req, res, next) {
+        Joi.validate(req.params, Schema.delete, (err, result) => {
+            if (err) {
+                err = err.details ? err.details[0].message : err.message;
+                return res.status(400).send(err);
+            }
+            next();
+        });
+    };
+
+    static activeUnActive(req, res, next) {
+        Joi.validate(res.locals, Schema.activeUnActive['locals'], (err, result) => {
+            if (err) {
+                err = err.details ? err.details[0].message : err.message;
+                return res.status(400).send("please login and try again");
+            }
+            Joi.validate(req.body, Schema.activeUnActive['body'], (err, result) => {
+                if (err) {
+                    err = err.details ? err.details[0].message : err.message;
+                    return res.status(400).send(err);
+                }
+                next();
+            });
+        });
     }
 }
 

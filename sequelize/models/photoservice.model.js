@@ -47,7 +47,19 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.JSONB,
             allowNull: false
         },
+        verifyNumber : {
+            type: DataTypes.STRING,
+            allowNull: true
+        },
         isVerified: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false
+        },
+        isDeleted : {
+            type: DataTypes.BOOLEAN,
+            allowNull: false
+        },
+        isUnActive : {
             type: DataTypes.BOOLEAN,
             allowNull: false
         }

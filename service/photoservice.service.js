@@ -10,14 +10,22 @@ class PhotoService {
 
     static login(req, res) {
         dao.login(req.body).then((data) => {
+            if (data.isDeleted) {
+                return res.status(401).send("you are deleted!!!. For help call to admin");
+            }
             const tokenSign = jwtSign({
                 uid: data.uid,
                 name: data.name
             });
-            const sendingData = {
-                token: tokenSign,
-                refreshToken: data.refreshToken
-            };
+            const sendingData = data.isVerified ?
+                {
+                    token: tokenSign,
+                    refreshToken: data.refreshToken
+                } : {
+                    token: tokenSign,
+                    refreshToken: data.refreshToken,
+                    canVerify: data.verifyNumber ? true : false
+                }
             return res.status(200).json(sendingData);
         }).catch((error) => {
             return res.status(400).send(error.name);
@@ -51,6 +59,50 @@ class PhotoService {
                 return res.status(200).send("updated");
             })
             .catch((error) => res.status(400).json(error))
+    };
+
+    static signUpVerifyNumber(req, res) {
+        dao.signUpVerifyNumber(req.body.verifyNumber, req.params.uid)
+            .then((data) => {
+                if (!data[0]) {
+                    return res.status(404).send("Id is wrong");
+                }
+                return res.status(200).send("verify number is created successfully");
+            })
+            .catch((error) => res.status(400).send(error.name))
+    };
+
+    static verify(req, res) {
+        dao.verify(req.body.verifyNumber, res.locals['uid'])
+            .then((data) => {
+                if (!data[0]) {
+                    return res.status(404).send("verification code is wrong");
+                }
+                return res.status(200).send("verification successfully");
+            })
+            .catch((error) => res.status(400).send(error.name))
+    };
+
+    static delete(req, res) {
+        dao.delete(req.params['uid'])
+            .then((data) => {
+                if (!data[0]) {
+                    return res.status(404).send("photoservice not found");
+                }
+                return res.status(200).send("deleted successfully");
+            })
+            .catch((error) => res.status(400).send(error.name))
+    };
+
+    static activeUnActive(req, res) {
+        dao.activeUnActive(req.body, res.locals['uid'])
+            .then((data) => {
+                if (!data[0]) {
+                    return res.status(404).send("password is wrong");
+                }
+                return res.status(200).send("successfully");
+            })
+            .catch((error) => res.status(400).send(error.name));
     };
 }
 

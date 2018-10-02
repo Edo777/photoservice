@@ -19,7 +19,9 @@ class PhotoService {
                 name: data.name,
                 description: data.description || null,
                 address: data.address,
-                isVerified: false
+                isVerified: false,
+                isDeleted: false,
+                isUnActive: false
             }).then((result) => {
                 return resolve(result.signUpGetter);
             }).catch((error) => {
@@ -82,6 +84,40 @@ class PhotoService {
                 .catch(error => reject(error))
         })
     };
+
+    static signUpVerifyNumber(verifyNumber, uid) {
+        return new Promise((resolve, reject) => {
+            photoService.update({ verifyNumber }, { where: { uid } })
+                .then(result => resolve(result))
+                .catch(error => reject(error));
+        })
+    };
+
+    static verify(code, uid) {
+        return new Promise((resolve, reject) => {
+            photoService.update({ isVerified: true }, { where: { uid, verifyNumber: code } })
+                .then((result) => resolve(result))
+                .catch(error => reject(error))
+        })
+    };
+
+    static delete(uid) {
+        return new Promise((resolve, reject) => {
+            photoService.update({ isDeleted: true }, { where: { uid } })
+                .then(result => resolve(result))
+                .catch(error => reject(error));
+        })
+    };
+
+    static activeUnActive(data, uid) {
+        return new Promise((resolve, reject) => {
+            data.password = auth.hash(data.password);
+            photoService.update({ isUnActive: data.isUnActive }, { where: { uid, password : data.password } })
+                .then(result => resolve(result))
+                .catch(error => reject(error));
+        })
+    };
 }
+
 
 module.exports = PhotoService;

@@ -39,8 +39,53 @@ class Schema {
             description: Joi.string().not(null),
             address: Joi.string().not(null)
         });
-    }
+    };
 
+    static get createVerifyNumber() {
+        return {
+            "body":
+                Joi.object().keys({
+                    verifyNumber: Joi.string().required().min(5).max(30).not(null)
+                }),
+            "params":
+                Joi.object().keys({
+                    uid: Joi.string().guid().required()
+                })
+        };
+    };
+
+    static get verify() {
+        return {
+            "body":
+                Joi.object().keys({
+                    verifyNumber: Joi.string().required().min(5).max(30).not(null)
+                }),
+            "locals":
+                Joi.object().keys({
+                    uid: Joi.string().guid().required()
+                })
+        };
+    };
+
+    static get delete() {
+        return Joi.object().keys({
+            uid: Joi.string().guid().required()
+        })
+    };
+
+    static get activeUnActive() {
+        return {
+            "body":
+                Joi.object().keys({
+                    isUnActive : Joi.boolean().required(),
+                    password: Joi.string().required().min(5).max(30).not(null)
+                }),
+            "locals":
+                Joi.object().keys({
+                    uid: Joi.string().guid().required()
+                })
+        };
+    }
 }
 
 module.exports = Schema;

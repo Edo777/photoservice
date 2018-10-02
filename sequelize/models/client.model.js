@@ -9,19 +9,23 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false,
         },
-        name : {
+        name: {
             type: DataTypes.STRING,
             allowNull: false,
         },
-        phone : {
+        phone: {
             type: DataTypes.STRING,
             allowNull: false,
         },
-        bonus : {
+        bonus: {
             type: DataTypes.SMALLINT,
             allowNull: true,
         },
-        refreshToken : {
+        verifyCode: {
+            type: DataTypes.SMALLINT,
+            allowNull: true,
+        },
+        refreshToken: {
             type: DataTypes.STRING,
             allowNull: false,
         }

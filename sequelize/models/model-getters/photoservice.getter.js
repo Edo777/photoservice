@@ -13,6 +13,9 @@ class Getter {
             return {
                 uid: this.getDataValue('uid'),
                 name: this.getDataValue('name'),
+                verifyNumber : this.getDataValue('verifyNumber'),
+                isVerified : this.getDataValue('isVerified'),
+                isDeleted: this.getDataValue('isDeleted'),
                 refreshToken: this.getDataValue('refreshToken')
             }
         }
@@ -30,7 +33,9 @@ class Getter {
                 phone: this.getDataValue('phone'),
                 description: this.getDataValue('description'),
                 address: this.getDataValue('address'),
-                isVerified: this.getDataValue('isVerified')
+                isVerified: this.getDataValue('isVerified'),
+                isUnActive : this.getDataValue('isUnActive'),
+                isDeleted : this.getDataValue('isDeleted')
             }
         }
     }

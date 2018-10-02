@@ -1,5 +1,6 @@
 const router = require("express").Router();
+const Service = require("../service/client.service");
 
-router
-    .get()
-    .post()
+router.post('/', Service.signUp);
+
+module.exports = router;

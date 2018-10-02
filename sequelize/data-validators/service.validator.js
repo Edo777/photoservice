@@ -16,7 +16,7 @@ class Validate {
         Joi.validate(req.params, Schema.update['params'], (err, result) => {
             if (err) {
                 err = err.details ? err.details[0].message : err.message;
-                return res.status(400).send(err.message);
+                return res.status(400).send(err);
             }
             Joi.validate(req.body, Schema.update['body'], (err, result) => {
                 if (err) {
