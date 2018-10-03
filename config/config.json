@@ -7,5 +7,8 @@
         "password": "zxcvbnm1234567",
         "dialect": "postgres",
         "schema": "photoservice"
+    },
+    "clickatell" : {
+        "username" : "1256"
     }
 }
